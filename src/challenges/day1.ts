@@ -25,8 +25,5 @@ const getSumOfFirstN = (n: number) => {
   return totalFirstN;
 };
 
-// Part A
 console.log(`Part A: ${getSumOfFirstN(1)}`);
-
-// Part B
 console.log(`Part B: ${getSumOfFirstN(3)}`);
