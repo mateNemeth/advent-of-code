@@ -15,7 +15,7 @@ const calcElfTotal = (elf: string[]) => {
   return elfTotal;
 };
 
-const orderedByCalories = data.sort((a, b) => (calcElfTotal(a) > calcElfTotal(b) ? -1 : 11));
+const orderedByCalories = data.sort((a, b) => (calcElfTotal(a) > calcElfTotal(b) ? -1 : 1));
 
 const getSumOfFirstN = (n: number) => {
   let totalFirstN = 0;
