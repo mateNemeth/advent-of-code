@@ -6,11 +6,27 @@ const data = readFileSync(path.resolve(__dirname, './day1.txt'))
   .split('\n\n')
   .map((line) => line.split('\n'));
 
-let highest = 0;
+const totalMap = new Map();
+const calcElfTotal = (elf: string[]) => {
+  if (totalMap.has(elf)) return totalMap.get(elf);
 
-for (const elf of data) {
-  const total = elf.reduce((acc, curr) => acc + +curr, 0);
-  highest = Math.max(highest, total);
-}
+  const elfTotal = elf.reduce((acc, curr) => acc + +curr, 0);
+  totalMap.set(elf, elfTotal);
+  return elfTotal;
+};
 
-console.log(highest);
+const orderedByCalories = data.sort((a, b) => (calcElfTotal(a) > calcElfTotal(b) ? -1 : 11));
+
+const getSumOfFirstN = (n: number) => {
+  let totalFirstN = 0;
+  for (let i = n; n > 0; n--) {
+    totalFirstN += totalMap.get(orderedByCalories[n - 1]);
+  }
+  return totalFirstN;
+};
+
+// Part A
+console.log(`Part A: ${getSumOfFirstN(1)}`);
+
+// Part B
+console.log(`Part B: ${getSumOfFirstN(3)}`);
