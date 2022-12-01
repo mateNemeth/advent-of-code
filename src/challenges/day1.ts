@@ -19,8 +19,8 @@ const orderedByCalories = data.sort((a, b) => (calcElfTotal(a) > calcElfTotal(b)
 
 const getSumOfFirstN = (n: number) => {
   let totalFirstN = 0;
-  for (let i = n; n > 0; n--) {
-    totalFirstN += totalMap.get(orderedByCalories[n - 1]);
+  for (let i = n; i > 0; i--) {
+    totalFirstN += totalMap.get(orderedByCalories[i - 1]);
   }
   return totalFirstN;
 };
