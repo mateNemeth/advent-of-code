@@ -54,17 +54,15 @@ const getResultByHand = (a: Codes, b: Codes): Results => {
   const self = HAND_CODES[b];
 
   if (self === enemy) return 'draw';
-  if (WinMap.get(self).includes(enemy)) return 'win';
-  return 'lose';
+  return WinMap.get(self).includes(enemy) ? 'win' : 'lose';
 };
 
 const getHandByResult = (a: Codes, b: Codes): Hands => {
   const enemy = HAND_CODES[a];
   const result = RESULT_CODES[b];
-  const winningHand = WinMap.get(enemy);
+  const losingHand = WinMap.get(enemy);
   if (result === 'draw') return enemy;
-  else if (result === 'lose') return winningHand;
-  else return HANDS.find((h) => h !== enemy && h !== winningHand);
+  return result === 'lose' ? losingHand : HANDS.find((h) => h !== enemy && h !== losingHand);
 };
 
 let score_A = 0;
