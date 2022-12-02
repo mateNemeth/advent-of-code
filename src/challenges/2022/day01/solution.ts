@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 
-const data = readFileSync(path.resolve(__dirname, './day1.txt'))
+const data = readFileSync(path.resolve(__dirname, './input.txt'))
   .toString()
   .split('\n\n')
   .map((line) => line.split('\n'));
