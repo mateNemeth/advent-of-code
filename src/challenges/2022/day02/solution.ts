@@ -6,6 +6,11 @@ const data = readFileSync(path.resolve(__dirname, './input.txt'))
   .split('\n')
   .map((line) => line.split(' ')) as Codes[][];
 
+const WinMap = new Map<Hands, Hands>();
+WinMap.set('paper', 'rock');
+WinMap.set('rock', 'scissor');
+WinMap.set('scissor', 'paper');
+
 const RESULTS = ['win', 'lose', 'draw'] as const;
 type Results = typeof RESULTS[number];
 
@@ -25,6 +30,12 @@ const HAND_CODES: Record<Codes, Hands> = {
   Z: 'scissor',
 };
 
+const RESULT_CODES: Record<typeof SELF_CODES[number], Results> = {
+  X: 'lose',
+  Y: 'draw',
+  Z: 'win',
+};
+
 const SCORES: Record<Results | Hands, number> = {
   lose: 0,
   draw: 3,
@@ -38,28 +49,33 @@ const getScore = (result: Results, hand: Hands): number => {
   return SCORES[result] + SCORES[hand];
 };
 
-const mod = (a: number, b: number) => {
-  const c = a % b;
-  return c < 0 ? c + b : c;
-};
-
-const getResult_A = (a: Codes, b: Codes): Results => {
-  const enemy = HANDS.indexOf(HAND_CODES[a]);
-  const self = HANDS.indexOf(HAND_CODES[b]);
+const getResultByHand = (a: Codes, b: Codes): Results => {
+  const enemy = HAND_CODES[a];
+  const self = HAND_CODES[b];
 
   if (self === enemy) return 'draw';
-  if (mod(enemy - self, HANDS.length) < HANDS.length / 2) {
-    return 'lose';
-  } else {
-    return 'win';
-  }
+  if (WinMap.get(self).includes(enemy)) return 'win';
+  return 'lose';
 };
 
-let score = 0;
+const getHandByResult = (a: Codes, b: Codes): Hands => {
+  const enemy = HAND_CODES[a];
+  const result = RESULT_CODES[b];
+  const winningHand = WinMap.get(enemy);
+  if (result === 'draw') return enemy;
+  else if (result === 'lose') return winningHand;
+  else return HANDS.find((h) => h !== enemy && h !== winningHand);
+};
+
+let score_A = 0;
+let score_B = 0;
 
 data.forEach((game) => {
-  const result = getResult_A(game[0], game[1]);
-  score += getScore(result, HAND_CODES[game[1]]);
+  const result_A = getResultByHand(game[0], game[1]);
+  score_A += getScore(result_A, HAND_CODES[game[1]]);
+  const hand_B = getHandByResult(game[0], game[1]);
+  score_B += getScore(RESULT_CODES[game[1]], hand_B);
 });
 
-console.log(score);
+console.log(`Part one: ${score_A}`);
+console.log(`Part two: ${score_B}`);
