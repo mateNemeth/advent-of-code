@@ -20,12 +20,7 @@ for (const assignment of data) {
   ) {
     fullOverlap += 1;
     anyOverlap += 1;
-  } else if (
-    (firstFrom < secondFrom && firstTo >= secondFrom) ||
-    (firstFrom <= secondTo && firstTo > secondTo) ||
-    (secondFrom < firstFrom && secondTo >= firstFrom) ||
-    (secondFrom <= firstTo && secondTo > firstTo)
-  ) {
+  } else if ((firstFrom <= secondTo && firstFrom >= secondFrom) || (secondFrom <= firstTo && secondFrom >= firstFrom)) {
     anyOverlap += 1;
   }
 }
