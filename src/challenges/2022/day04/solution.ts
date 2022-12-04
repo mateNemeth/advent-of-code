@@ -14,13 +14,11 @@ for (const assignment of data) {
   const [firstFrom, firstTo] = getFromTo(first);
   const [secondFrom, secondTo] = getFromTo(second);
 
-  if (
-    (firstFrom >= secondFrom && firstFrom <= secondTo && firstTo <= secondTo) ||
-    (secondFrom >= firstFrom && secondFrom <= firstTo && secondTo <= firstTo)
-  ) {
+  if ((firstFrom >= secondFrom && firstTo <= secondTo) || (secondFrom >= firstFrom && secondTo <= firstTo)) {
     fullOverlap += 1;
-    anyOverlap += 1;
-  } else if ((firstFrom <= secondTo && firstFrom >= secondFrom) || (secondFrom <= firstTo && secondFrom >= firstFrom)) {
+  }
+
+  if (secondFrom <= firstTo && secondTo >= firstFrom) {
     anyOverlap += 1;
   }
 }
