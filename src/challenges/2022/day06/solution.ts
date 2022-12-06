@@ -2,7 +2,6 @@ import { readFileSync } from 'fs';
 import path from 'path';
 
 const data = readFileSync(path.resolve(__dirname, './input.txt')).toString();
-const testData = readFileSync(path.resolve(__dirname, './testinput.txt')).toString();
 
 const characters = data.split('');
 
@@ -15,7 +14,6 @@ const getDistinctCharactersFromString = (count: number) => {
     if (found >= 0) lastLetters.splice(0, found + 1);
     lastLetters.push(characters[i]);
     if (lastLetters.length === count) {
-      console.log(lastLetters);
       repeatedIdx = i + 1;
       break;
     }
